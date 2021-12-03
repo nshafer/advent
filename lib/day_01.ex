@@ -1,4 +1,4 @@
-defmodule Advent.One do
+defmodule Advent.Day01 do
   # Part 1
   def count_depth_increases(depths) do
     depths
