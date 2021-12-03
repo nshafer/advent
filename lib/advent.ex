@@ -6,9 +6,9 @@ defmodule Advent do
     |> String.split("\n")
   end
 
-  def load_ints(filename) do
+  def load_ints(filename, base \\ 10) do
     load_inputs(filename)
-    |> Enum.map(fn s -> String.to_integer(s) end)
+    |> Enum.map(fn s -> String.to_integer(s, base) end)
   end
 
   def input_path(filename) do
