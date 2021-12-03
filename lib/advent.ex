@@ -2,7 +2,8 @@ defmodule Advent do
   def load_inputs(filename) do
     input_path(filename)
     |> File.read!()
-    |> String.split()
+    |> String.trim()
+    |> String.split("\n")
   end
 
   def load_ints(filename) do
