@@ -11,8 +11,8 @@ defmodule Advent.Day03 do
   @spec calc_digit_frequencies([String.t], integer) :: [Map.t]
   defp calc_digit_frequencies(binaries, length) do
     binaries
-    |> Enum.map(&String.graphemes/1)
-    |> Enum.flat_map(&Enum.with_index/1)
+    |> Stream.map(&String.graphemes/1)
+    |> Stream.flat_map(&Enum.with_index/1)
     |> Enum.frequencies()
     |> shape_frequencies(length)
   end
