@@ -2,21 +2,15 @@ defmodule Advent.Day07 do
   # Part 1
   def find_position(crabs) do
     Enum.min(crabs)..Enum.max(crabs)
-    |> Stream.map(fn i -> {Enum.map(crabs, &abs(i - &1)), i} end)
-    |> Stream.map(fn {moves, i} -> {Enum.sum(moves), i} end)
-    |> Enum.sort()
-    |> List.first()
-    |> elem(0)
+    |> Stream.map(fn p -> Enum.reduce(crabs, 0, &(abs(p - &1) + &2)) end)
+    |> Enum.min()
   end
 
   # Part 2
   def find_position2(crabs) do
     Enum.min(crabs)..Enum.max(crabs)
-    |> Stream.map(fn i -> {Enum.map(crabs, &calc_fuel(i, &1)), i} end)
-    |> Stream.map(fn {moves, i} -> {Enum.sum(moves), i} end)
-    |> Enum.sort()
-    |> List.first()
-    |> elem(0)
+    |> Stream.map(fn p -> Enum.reduce(crabs, 0, &(calc_fuel(p, &1) + &2)) end)
+    |> Enum.min()
   end
 
   def calc_fuel(p1, p2) do
