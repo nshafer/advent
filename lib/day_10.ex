@@ -21,19 +21,19 @@ defmodule Advent.Day10 do
   end
 
   # Utils
-  def check_line(line, buf \\ "")
-  def check_line("", ""), do: :ok
-  def check_line("", buf) when byte_size(buf) > 0, do: {:incomplete, buf}
+  def check_line(line, buf \\ [])
+  def check_line("", []), do: :ok
+  def check_line("", buf), do: {:incomplete, buf}
 
   def check_line(<<c, rest::binary>>, buf) when c in ~c/([{</ do
-    check_line(rest, <<c>> <> buf)
+    check_line(rest, [c | buf])
   end
 
-  def check_line(<<c, _rest::binary>>, "") when c in ~c/)]}>/, do: {:corrupt, <<c>>}
-  def check_line(<<c, rest::binary>>, <<b, buf::binary>>) when c in ~c/)]}>/ do
+  def check_line(<<c, _rest::binary>>, []) when c in ~c/)]}>/, do: {:corrupt, c}
+  def check_line(<<c, rest::binary>>, [b | buf]) when c in ~c/)]}>/ do
     case is_match?(b, c) do
       true -> check_line(rest, buf)
-      false -> {:corrupt, <<c>>}
+      false -> {:corrupt, c}
     end
   end
 
@@ -45,19 +45,18 @@ defmodule Advent.Day10 do
 
   def score_result(:ok), do: 0
 
-  def score_result({:corrupt, ")" <> _rest}), do: 3
-  def score_result({:corrupt, "]" <> _rest}), do: 57
-  def score_result({:corrupt, "}" <> _rest}), do: 1197
-  def score_result({:corrupt, ">" <> _rest}), do: 25137
+  def score_result({:corrupt, ?)}), do: 3
+  def score_result({:corrupt, ?]}), do: 57
+  def score_result({:corrupt, ?}}), do: 1197
+  def score_result({:corrupt, ?>}), do: 25137
 
   def score_result({:incomplete, buf}) do
     buf
-    |> String.codepoints()
     |> Enum.map(fn
-      "(" -> 1
-      "[" -> 2
-      "{" -> 3
-      "<" -> 4
+      ?( -> 1
+      ?[ -> 2
+      ?{ -> 3
+      ?< -> 4
     end)
     |> Enum.reduce(0, fn points, sum -> sum * 5 + points end)
   end
