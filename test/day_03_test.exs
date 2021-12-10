@@ -1,5 +1,5 @@
 defmodule AdventDay03Test do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   test "part 1" do
     binaries = Advent.load_inputs("day_03/binaries.txt")

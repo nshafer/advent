@@ -1,5 +1,5 @@
 defmodule AdventDay04Test do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   @input_path "day_04/input.txt"
 
