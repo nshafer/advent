@@ -1,0 +1,3 @@
+a   ab  abc
+bc cba    b
+c    a    b

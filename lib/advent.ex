@@ -26,4 +26,19 @@ defmodule Advent do
   def input_path(filename) do
     Application.app_dir(:advent, Path.join(["priv", filename]))
   end
+
+  def load_matrix(filename, opts \\ []) do
+    split_by = Keyword.get(opts, :split_by, ~r/\s+/)
+    parser = Keyword.get(opts, :parser, nil)
+
+    for row <- load_inputs(filename) do
+      for v <- String.split(row, split_by, trim: true) do
+        maybe_parse_input(v, parser)
+      end
+    end
+    |> Matrix.new()
+  end
+
+  def maybe_parse_input(v, nil), do: v
+  def maybe_parse_input(v, parser), do: parser.(v)
 end
