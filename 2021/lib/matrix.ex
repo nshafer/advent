@@ -166,6 +166,15 @@ defmodule Matrix do
   end
 
   @doc """
+  Returns a list of all values of the matrix, read left to right, top to bottom.
+  """
+  def values(matrix) do
+    for x <- 0..matrix.width-1, y <- 0..matrix.height-1 do
+      matrix.m[x][y]
+    end
+  end
+
+  @doc """
   Returns a list of all distinct values in the matrix, no repeats.
   """
   def distinct_values(matrix) do
@@ -241,7 +250,7 @@ defimpl Inspect, for: Matrix do
   import Inspect.Algebra
 
   def inspect(matrix, opts) do
-    concat(["#Matrix<", to_doc(matrix.width, opts), ",", to_doc(matrix.height, opts), line(), inspect_grid(matrix, opts), ">"])
+    concat(["#Matrix<width:", to_doc(matrix.width, opts), ", height:", to_doc(matrix.height, opts), " - ", line(), inspect_grid(matrix, opts), ">"])
   end
 
   def inspect_grid(matrix, opts) do
